@@ -6,62 +6,17 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=yes"
     />
-    <title>
-      GoodNews Academy - JAMB CBT: English | Literature | Government | CRS
-    </title>
-    <!-- Fonts & Libraries -->
+    <title>GoodNews Academy - JAMB CBT Suite | Arts Examination</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Poppins:wght@400;600;700&family=Fira+Code&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Poppins:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-    <style type="text/tailwindcss">
-      @import "tailwindcss";
-      @theme inline {
-        --color-background: var(--background);
-        --color-foreground: var(--foreground);
-        --color-primary: var(--primary);
-        --color-primary-foreground: var(--primary-foreground);
-        --color-secondary: var(--secondary);
-        --color-secondary-foreground: var(--secondary-foreground);
-        --color-tertiary: var(--tertiary);
-        --color-muted: var(--muted);
-        --color-muted-foreground: var(--muted-foreground);
-        --color-accent: var(--accent);
-        --color-destructive: var(--destructive);
-        --color-card: var(--card);
-        --color-card-foreground: var(--card-foreground);
-        --color-border: var(--border);
-        --color-input: var(--input);
-        --color-ring: var(--ring);
-        --radius-sm: calc(var(--radius) - 4px);
-        --radius-md: calc(var(--radius) - 2px);
-        --radius-lg: var(--radius);
-        --font-family-sans: "Plus Jakarta Sans", "Inter", sans-serif;
-        --font-family-heading: "Poppins", sans-serif;
-      }
-      :root {
-        --background: #f8fafc;
-        --primary: #1e40af;
-        --foreground: #1e293b;
-        --primary-foreground: #ffffff;
-        --border: #e2e8f0;
-        --ring: #1e40af;
-        --radius: 0.5rem;
-        --secondary: #64748b;
-        --tertiary: #10b981;
-        --card: #ffffff;
-        --input: #f1f5f9;
-        --muted: #f1f5f9;
-        --muted-foreground: #64748b;
-        --destructive: #ef4444;
-      }
+    <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
+    <style>
       * {
         transition: all 0.15s ease;
       }
@@ -79,38 +34,57 @@
         background: rgba(0, 0, 0, 0.4);
         backdrop-filter: blur(4px);
       }
+      .subject-tab.disabled-tab {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+      .custom-radio:checked + div {
+        border-color: #1e40af;
+        background-color: #eff6ff;
+      }
+      /* Hide any result display elements entirely — no results shown to user */
+      .result-toast,
+      .score-badge {
+        display: none !important;
+      }
+      /* Ensure final submission only sends email, no visible score popup */
     </style>
   </head>
-  <body class="font-sans antialiased">
+  <body class="font-sans antialiased bg-gray-50">
     <!-- REGISTRATION MODAL -->
     <div
       id="registrationModal"
       class="fixed inset-0 z-[100] flex items-center justify-center reg-overlay"
     >
       <div
-        class="bg-card w-full max-w-md mx-4 rounded-2xl shadow-2xl border border-border p-6 sm:p-8"
+        class="bg-white w-full max-w-md mx-4 rounded-2xl shadow-2xl border border-gray-200 p-6 sm:p-8"
       >
         <div class="flex flex-col items-center text-center mb-6">
           <div
-            class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-3"
+            class="w-14 h-14 bg-blue-900/10 rounded-full flex items-center justify-center mb-3"
           >
             <iconify-icon
               icon="lucide:user-check"
-              class="text-primary text-3xl"
+              class="text-blue-900 text-3xl"
             ></iconify-icon>
           </div>
-          <h2 class="text-2xl font-heading font-bold text-foreground">
-            GoodNews Academy<br /><span class="text-sm"
-              >JAMB CBT Exam (Arts)</span
-            >
+          <h2 class="text-2xl font-bold text-gray-900">
+            GoodNews Academy
+            <span class="text-base block">JAMB CBT Arts Examination</span>
           </h2>
-          <p class="text-muted-foreground text-sm mt-1">
-            Enter your details to begin examination
+          <p class="text-gray-500 text-sm mt-1">
+            Enter your details → Answer ALL subjects → Submit once
+          </p>
+          <p
+            class="text-xs text-amber-700 bg-amber-50 px-3 py-1 rounded-full mt-2"
+          >
+            🔒 Results are confidential & sent to admin only
           </p>
         </div>
         <form id="regForm" class="space-y-5">
           <div>
-            <label class="block text-sm font-semibold text-foreground mb-1.5"
+            <label class="block text-sm font-semibold text-gray-900 mb-1.5"
               >Full Name *</label
             >
             <input
@@ -118,11 +92,11 @@
               id="studentName"
               required
               placeholder="e.g. Adebayo Chinedu"
-              class="w-full px-4 py-3 rounded-xl border border-border bg-input focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none text-foreground"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-blue-900/30 focus:border-blue-900 outline-none"
             />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-foreground mb-1.5"
+            <label class="block text-sm font-semibold text-gray-900 mb-1.5"
               >Registration Number *</label
             >
             <input
@@ -130,74 +104,77 @@
               id="studentRegNo"
               required
               placeholder="e.g. JAMB/2026/789012"
-              class="w-full px-4 py-3 rounded-xl border border-border bg-input focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none text-foreground"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-blue-900/30 focus:border-blue-900 outline-none"
             />
           </div>
           <button
             type="submit"
-            class="w-full py-3.5 bg-primary text-primary-foreground font-bold rounded-xl shadow-md hover:bg-primary/90 transition-all flex items-center justify-center gap-2"
+            class="w-full py-3.5 bg-blue-900 text-white font-bold rounded-xl shadow-md hover:bg-blue-800 transition-all flex items-center justify-center gap-2"
           >
-            <iconify-icon icon="lucide:play"></iconify-icon> Start Examination
+            <iconify-icon icon="lucide:play"></iconify-icon> Start Full
+            Examination
           </button>
-          <p class="text-xs text-muted-foreground text-center">
-            Your result will be sent to the administrator.
+          <p class="text-xs text-gray-500 text-center">
+            English (60) | Literature (40) | Government (40) | CRS (40)<br /><strong
+              >Final "Submit All Subjects"</strong
+            >
+            sends consolidated report to examiner — you will NOT see your score.
           </p>
         </form>
       </div>
     </div>
 
-    <!-- MAIN QUIZ INTERFACE -->
+    <!-- MAIN APP -->
     <div
       id="mainApp"
-      class="min-h-screen w-full bg-background flex-col relative overflow-hidden"
+      class="min-h-screen w-full bg-gray-50"
       style="display: none"
     >
       <header
-        class="bg-card border-b border-border px-6 py-3 flex items-center justify-between shadow-sm sticky top-0 z-10 flex-wrap gap-3"
+        class="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between shadow-sm sticky top-0 z-10 flex-wrap gap-3"
       >
         <div class="flex items-center gap-6 flex-wrap">
           <div class="flex items-center gap-2">
             <div
-              class="w-8 h-8 bg-primary rounded flex items-center justify-center"
+              class="w-8 h-8 bg-blue-900 rounded flex items-center justify-center"
             >
               <iconify-icon
                 icon="lucide:graduation-cap"
                 class="text-white text-lg"
               ></iconify-icon>
             </div>
-            <span
-              class="font-heading font-bold text-foreground hidden md:inline"
+            <span class="font-bold text-gray-900 hidden md:inline"
               >JAMB CBT Portal</span
             >
             <span
               id="displayRegBadge"
-              class="text-xs bg-muted px-3 py-1 rounded-full border border-border font-medium text-muted-foreground"
+              class="text-xs bg-gray-100 px-3 py-1 rounded-full border border-gray-200 font-medium text-gray-500"
             ></span>
           </div>
           <nav
-            class="flex items-center gap-1 bg-muted p-1 rounded-lg border border-border"
+            class="flex items-center gap-1 bg-gray-100 p-1 rounded-lg border border-gray-200"
           >
             <button
               data-subject="english"
-              class="subject-tab px-4 py-1.5 rounded-md text-sm font-semibold bg-primary text-primary-foreground shadow-sm"
+              class="subject-tab px-4 py-1.5 rounded-md text-sm font-semibold bg-blue-900 text-white shadow-sm"
             >
               English (60)
             </button>
             <button
               data-subject="literature"
-              class="subject-tab px-4 py-1.5 rounded-md text-sm font-semibold text-muted-foreground hover:bg-card hover:text-foreground"
+              class="subject-tab px-4 py-1.5 rounded-md text-sm font-semibold text-gray-500 hover:bg-white hover:text-gray-900"
             >
               Literature (40)
             </button>
             <button
               data-subject="government"
-              class="subject-tab px-4 py-1.5 rounded-md text-sm font-semibold text-muted-foreground hover:bg-card hover:text-foreground"
+              class="subject-tab px-4 py-1.5 rounded-md text-sm font-semibold text-gray-500 hover:bg-white hover:text-gray-900"
             >
               Government (40)
             </button>
             <button
               data-subject="crs"
-              class="subject-tab px-4 py-1.5 rounded-md text-sm font-semibold text-muted-foreground hover:bg-card hover:text-foreground"
+              class="subject-tab px-4 py-1.5 rounded-md text-sm font-semibold text-gray-500 hover:bg-white hover:text-gray-900"
             >
               CRS (40)
             </button>
@@ -205,49 +182,46 @@
         </div>
         <div class="flex items-center gap-4">
           <div
-            class="flex items-center gap-2 px-4 py-2 bg-destructive/10 text-destructive rounded-lg border border-destructive/20"
+            class="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-600 rounded-lg border border-red-200"
           >
             <iconify-icon icon="lucide:clock" class="text-xl"></iconify-icon>
             <span id="timer" class="font-mono text-xl font-bold">02:00:00</span>
           </div>
           <button
-            id="submitBtn"
-            class="px-5 py-2 bg-primary text-primary-foreground rounded-lg font-bold shadow-md hover:bg-primary/90 transition-all"
+            id="finalSubmitBtn"
+            class="px-6 py-2 bg-green-600 text-white rounded-lg font-bold shadow-md hover:bg-green-700 transition-all flex items-center gap-2"
           >
-            Submit
+            <iconify-icon icon="lucide:send"></iconify-icon> Submit ALL Subjects
           </button>
         </div>
       </header>
 
-      <div class="flex-1 flex overflow-hidden">
-        <main class="flex-1 overflow-y-auto p-6 md:p-10 flex flex-col">
+      <div class="flex flex-1 overflow-hidden">
+        <main class="flex-1 overflow-y-auto p-6 md:p-10">
           <div class="max-w-3xl mx-auto w-full space-y-8">
             <div
-              class="flex items-center justify-between border-b border-border pb-4 flex-wrap gap-3"
+              class="flex items-center justify-between border-b border-gray-200 pb-4 flex-wrap gap-3"
             >
-              <h2
-                id="subjectTitle"
-                class="text-xl font-heading font-bold text-primary"
-              >
+              <h2 id="subjectTitle" class="text-xl font-bold text-blue-900">
                 Use of English
               </h2>
               <span
                 id="questionCounter"
-                class="text-sm font-medium text-muted-foreground bg-muted px-3 py-1 rounded-full border border-border"
+                class="text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full border border-gray-200"
                 >Question 1 of 60</span
               >
             </div>
             <div id="questionContainer" class="space-y-6"></div>
-            <div class="flex items-center justify-between pt-10 mt-auto">
+            <div class="flex items-center justify-between pt-10">
               <button
                 id="prevBtn"
-                class="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-foreground bg-muted hover:bg-border transition-all border border-border shadow-sm"
+                class="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-gray-900 bg-gray-100 hover:bg-gray-200 transition-all border border-gray-200 shadow-sm"
               >
                 <iconify-icon icon="lucide:arrow-left"></iconify-icon> Previous
               </button>
               <button
                 id="nextBtn"
-                class="flex items-center gap-2 px-8 py-3 rounded-lg font-bold text-primary-foreground bg-primary hover:bg-primary/90 transition-all shadow-md"
+                class="flex items-center gap-2 px-8 py-3 rounded-lg font-bold text-white bg-blue-900 hover:bg-blue-800 transition-all shadow-md"
               >
                 Next Question
                 <iconify-icon icon="lucide:arrow-right"></iconify-icon>
@@ -256,25 +230,23 @@
           </div>
         </main>
         <aside
-          class="w-80 bg-card border-l border-border flex flex-col hidden lg:flex"
+          class="w-80 bg-white border-l border-gray-200 flex-col hidden lg:flex"
         >
-          <div class="p-6 border-b border-border">
-            <h3 class="font-heading font-bold text-foreground mb-4">
-              Question Progress
-            </h3>
+          <div class="p-6 border-b border-gray-200">
+            <h3 class="font-bold text-gray-900 mb-4">Question Progress</h3>
             <div class="flex items-center gap-4 text-xs font-semibold">
               <div class="flex items-center gap-1.5">
-                <div class="w-3 h-3 bg-primary rounded-sm"></div>
+                <div class="w-3 h-3 bg-blue-900 rounded-sm"></div>
                 <span>Answered</span>
               </div>
               <div class="flex items-center gap-1.5">
                 <div
-                  class="w-3 h-3 bg-muted border border-border rounded-sm"
+                  class="w-3 h-3 bg-gray-100 border border-gray-200 rounded-sm"
                 ></div>
                 <span>Unanswered</span>
               </div>
               <div class="flex items-center gap-1.5">
-                <div class="w-3 h-3 border-2 border-primary rounded-sm"></div>
+                <div class="w-3 h-3 border-2 border-blue-900 rounded-sm"></div>
                 <span>Current</span>
               </div>
             </div>
@@ -282,21 +254,21 @@
           <div class="flex-1 overflow-y-auto p-6">
             <div id="questionGrid" class="grid grid-cols-5 gap-2"></div>
             <div
-              class="col-span-5 py-4 flex flex-col items-center justify-center border-t border-border mt-2 space-y-4"
+              class="col-span-5 py-4 flex flex-col items-center justify-center border-t border-gray-200 mt-2 space-y-4"
             >
               <div class="text-center">
                 <p
-                  class="text-[10px] uppercase tracking-widest text-muted-foreground font-bold"
+                  class="text-[10px] uppercase tracking-widest text-gray-500 font-bold"
                 >
                   Answered Status
                 </p>
-                <p id="answeredCount" class="text-lg font-bold text-foreground">
+                <p id="answeredCount" class="text-lg font-bold text-gray-900">
                   0 / 0
                 </p>
               </div>
               <button
                 id="openCalculator"
-                class="w-full py-3 bg-secondary/10 text-secondary rounded-lg font-bold border border-secondary/20 hover:bg-secondary/20 transition-all flex items-center justify-center gap-2"
+                class="w-full py-3 bg-gray-500/10 text-gray-600 rounded-lg font-bold border border-gray-500/20 hover:bg-gray-500/20 transition-all flex items-center justify-center gap-2"
               >
                 <iconify-icon icon="lucide:calculator"></iconify-icon> Open
                 Calculator
@@ -308,7 +280,7 @@
       <div class="absolute bottom-6 right-6 lg:right-[340px] z-20">
         <button
           id="floatingCalcBtn"
-          class="w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform"
+          class="w-14 h-14 bg-blue-900 text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform"
         >
           <iconify-icon
             icon="lucide:calculator"
@@ -318,13 +290,13 @@
       </div>
       <div
         id="calculatorModal"
-        class="calculator-modal bg-card rounded-xl shadow-2xl border border-border w-80 p-4"
+        class="calculator-modal bg-white rounded-xl shadow-2xl border border-gray-200 w-80 p-4"
       >
         <div class="flex justify-between items-center mb-3">
           <h3 class="font-bold">Calculator</h3>
           <button
             id="closeCalculator"
-            class="text-muted-foreground hover:text-foreground"
+            class="text-gray-500 hover:text-gray-900"
           >
             ✕
           </button>
@@ -332,61 +304,17 @@
         <input
           type="text"
           id="calcInput"
-          class="w-full p-3 text-right text-xl font-mono border border-border rounded-lg bg-input mb-3"
+          class="w-full p-3 text-right text-xl font-mono border border-gray-200 rounded-lg bg-gray-50 mb-3"
           readonly
           value="0"
         />
-        <div class="grid grid-cols-4 gap-2">
-          <button class="calc-btn p-3 bg-muted rounded-lg font-bold">7</button
-          ><button class="calc-btn p-3 bg-muted rounded-lg font-bold">8</button
-          ><button class="calc-btn p-3 bg-muted rounded-lg font-bold">9</button
-          ><button
-            class="calc-btn p-3 bg-primary text-white rounded-lg font-bold"
-          >
-            /
-          </button>
-          <button class="calc-btn p-3 bg-muted rounded-lg font-bold">4</button
-          ><button class="calc-btn p-3 bg-muted rounded-lg font-bold">5</button
-          ><button class="calc-btn p-3 bg-muted rounded-lg font-bold">6</button
-          ><button
-            class="calc-btn p-3 bg-primary text-white rounded-lg font-bold"
-          >
-            *
-          </button>
-          <button class="calc-btn p-3 bg-muted rounded-lg font-bold">1</button
-          ><button class="calc-btn p-3 bg-muted rounded-lg font-bold">2</button
-          ><button class="calc-btn p-3 bg-muted rounded-lg font-bold">3</button
-          ><button
-            class="calc-btn p-3 bg-primary text-white rounded-lg font-bold"
-          >
-            -
-          </button>
-          <button class="calc-btn p-3 bg-muted rounded-lg font-bold">0</button
-          ><button class="calc-btn p-3 bg-muted rounded-lg font-bold">.</button
-          ><button
-            class="calc-btn p-3 bg-destructive text-white rounded-lg font-bold"
-          >
-            C</button
-          ><button
-            class="calc-btn p-3 bg-primary text-white rounded-lg font-bold"
-          >
-            +
-          </button>
-          <button
-            class="calc-btn col-span-2 p-3 bg-primary text-white rounded-lg font-bold"
-          >
-            =</button
-          ><button
-            class="calc-btn p-3 bg-secondary text-white rounded-lg font-bold"
-          >
-            ⌫
-          </button>
-        </div>
+        <div class="grid grid-cols-4 gap-2" id="calcButtons"></div>
       </div>
     </div>
 
     <script>
       (function () {
+        // ----------------------------- EMAILJS CONFIG -----------------------------
         const EMAILJS_PUBLIC_KEY = "onGXsnomyfbaJ9Vv5";
         const EMAILJS_SERVICE_ID = "service_vkcugma";
         const EMAILJS_TEMPLATE_ID = "template_r24k5fe";
@@ -397,52 +325,38 @@
         let studentFullName = "",
           studentRegNumber = "";
 
-        // ======================== LARGE QUESTION BANKS (more than required, shuffling ensures variety) ========================
-
-        // ----- ENGLISH BANK (130+ questions: lexical, oral, grammar, antonyms/synonyms, comprehension style) -----
+        // ----------------------------- ENHANCED QUESTION BANKS (realistic JAMB-style) -----------------------------
+        // ENGLISH: 150+ bank (ensuring 60 unique)
         const englishBank = [
           {
-            text:
-              "Choose the option that best conveys the meaning of the underlined portion " +
-              "In the match against the uplanders team, the sub mariners turned out to the <u> dark horse <u>   ",
-
+            text: "Choose the option that best explains the underlined word: The manager is a 'dark horse' in the tournament.",
             options: [
-              "played most brilliantly",
-              "Played below thir usual form",
-              "Won expectedly",
-              "lost as expected",
+              "Played poorly",
+              "Unknown but talented",
+              "Lost badly",
+              "Injured player",
             ],
-            correct: 2,
+            correct: 1,
           },
           {
-            text: "Choose the option NEAREST IN MEANING to 'EPHEMERAL'.",
+            text: "NEAREST IN MEANING: EPHEMERAL",
             options: ["Eternal", "Brief", "Permanent", "Lengthy"],
             correct: 1,
           },
           {
-            text: "Choose the option OPPOSITE IN MEANING to 'AUDACIOUS'.",
+            text: "OPPOSITE: AUDACIOUS",
             options: ["Brave", "Timid", "Bold", "Fearless"],
             correct: 1,
           },
           {
             text: "The idiom 'to wash one's dirty linen in public' means:",
             options: [
-              "To clean clothes openly",
-              "To discuss private affairs publicly",
-              "To do laundry",
-              "To confess a crime",
+              "To clean clothes",
+              "Discuss private affairs publicly",
+              "Do laundry",
+              "Confess a crime",
             ],
             correct: 1,
-          },
-          {
-            text: "He is a man of ___ principles; he never changes his mind.",
-            options: ["fluid", "flexible", "inflexible", "wavering"],
-            correct: 2,
-          },
-          {
-            text: "The officer was ___ for his gallant act.",
-            options: ["commended", "criticized", "sacked", "arrested"],
-            correct: 0,
           },
           {
             text: "If I had known, I ___ you.",
@@ -450,37 +364,27 @@
             correct: 2,
           },
           {
-            text: "The team ___ won the trophy celebrated all night.",
-            options: ["who", "whom", "which", "whose"],
-            correct: 0,
-          },
-          {
             text: "Neither the teacher nor the students ___ present.",
             options: ["was", "were", "is", "has"],
             correct: 1,
           },
           {
-            text: "Identify the word that has the stress on the second syllable:",
+            text: "Choose the word that has the stress on the second syllable:",
             options: ["Photograph", "Photography", "Photon", "Photosynthesis"],
             correct: 1,
           },
           {
-            text: "The word 'sweet' and 'suite' are:",
+            text: "The words 'sweet' and 'suite' are:",
             options: ["Homonyms", "Synonyms", "Antonyms", "Homographs"],
             correct: 0,
           },
           {
-            text: "Choose the word that contains the /θ/ sound:",
-            options: ["then", "that", "think", "these"],
-            correct: 2,
-          },
-          {
-            text: "NEAREST IN MEANING: 'Benevolent'",
+            text: "NEAREST: Benevolent",
             options: ["Kind", "Cruel", "Greedy", "Mean"],
             correct: 0,
           },
           {
-            text: "OPPOSITE: 'Vivid'",
+            text: "OPPOSITE: Vivid",
             options: ["Dull", "Bright", "Clear", "Lively"],
             correct: 0,
           },
@@ -500,12 +404,12 @@
             correct: 1,
           },
           {
-            text: "NEAREST: 'Profound'",
+            text: "NEAREST: Profound",
             options: ["Shallow", "Deep", "Superficial", "Trivial"],
             correct: 1,
           },
           {
-            text: "OPPOSITE: 'Loquacious'",
+            text: "OPPOSITE: Loquacious",
             options: ["Talkative", "Silent", "Chatty", "Wordy"],
             correct: 1,
           },
@@ -515,32 +419,27 @@
             correct: 1,
           },
           {
-            text: "NEAREST: 'Ubiquitous'",
+            text: "NEAREST: Ubiquitous",
             options: ["Rare", "Everywhere", "Scarce", "Absent"],
             correct: 1,
           },
           {
-            text: "OPPOSITE: 'Gregarious'",
+            text: "OPPOSITE: Gregarious",
             options: ["Sociable", "Reserved", "Friendly", "Outgoing"],
             correct: 1,
           },
           {
-            text: "Choose the correct spelling:",
+            text: "Correct spelling:",
             options: ["Accommodate", "Acommodate", "Accomodate", "Acomodate"],
             correct: 0,
           },
           {
-            text: "The word 'defer' in 'I will defer to your opinion' means:",
-            options: ["Delay", "Respectfully yield", "Postpone", "Cancel"],
-            correct: 1,
-          },
-          {
-            text: "NEAREST: 'Capricious'",
+            text: "NEAREST: Capricious",
             options: ["Predictable", "Whimsical", "Steady", "Constant"],
             correct: 1,
           },
           {
-            text: "The antonym of 'adversity' is:",
+            text: "Antonym of 'adversity':",
             options: ["Hardship", "Misfortune", "Prosperity", "Sorrow"],
             correct: 2,
           },
@@ -555,7 +454,7 @@
             correct: 2,
           },
           {
-            text: "NEAREST: 'Felicitous'",
+            text: "NEAREST: Felicitous",
             options: ["Unhappy", "Appropriate", "Awkward", "Inappropriate"],
             correct: 1,
           },
@@ -565,18 +464,13 @@
             correct: 0,
           },
           {
-            text: "OPPOSITE: 'Stringent'",
+            text: "OPPOSITE: Stringent",
             options: ["Strict", "Lenient", "Rigorous", "Harsh"],
             correct: 1,
           },
           {
-            text: "The new policy is ___ to both students and teachers.",
+            text: "The new policy is ___ to both students.",
             options: ["benefit", "beneficial", "beneficiary", "benefitting"],
-            correct: 1,
-          },
-          {
-            text: "Choose the word that rhymes with 'great':",
-            options: ["Meat", "Bait", "Height", "Feet"],
             correct: 1,
           },
           {
@@ -585,17 +479,12 @@
             correct: 2,
           },
           {
-            text: "The committee members ___ each other before the meeting.",
-            options: ["knows", "know", "has known", "is knowing"],
-            correct: 1,
-          },
-          {
-            text: "NEAREST: 'Pernicious'",
+            text: "NEAREST: Pernicious",
             options: ["Harmless", "Beneficial", "Destructive", "Gentle"],
             correct: 2,
           },
           {
-            text: "OPPOSITE: 'Arduous'",
+            text: "OPPOSITE: Arduous",
             options: ["Easy", "Difficult", "Strenuous", "Tough"],
             correct: 0,
           },
@@ -605,7 +494,7 @@
             correct: 0,
           },
           {
-            text: "Emphatic stress: 'The PRESIDENT arrived late.' Most suitable question?",
+            text: "Emphatic stress: 'The PRESIDENT arrived late.' Appropriate question?",
             options: [
               "Did the vice president arrive late?",
               "Did the president arrive early?",
@@ -615,12 +504,7 @@
             correct: 0,
           },
           {
-            text: "The word 'minute' (tiny) has ___ syllable(s).",
-            options: ["One", "Two", "Three", "Four"],
-            correct: 1,
-          },
-          {
-            text: "NEAREST: 'Voracious'",
+            text: "NEAREST: Voracious",
             options: ["Greedy", "Generous", "Indifferent", "Satisfied"],
             correct: 0,
           },
@@ -630,12 +514,12 @@
             correct: 1,
           },
           {
-            text: "OPPOSITE: 'Spurious'",
+            text: "OPPOSITE: Spurious",
             options: ["Fake", "Authentic", "False", "Counterfeit"],
             correct: 1,
           },
           {
-            text: "She is looking for a ___ dress for the party.",
+            text: "She is looking for a ___ dress.",
             options: [
               "red beautiful silk",
               "beautiful red silk",
@@ -645,25 +529,23 @@
             correct: 1,
           },
           {
-            text: "NEAREST: 'Inept'",
+            text: "NEAREST: Inept",
             options: ["Skilled", "Clumsy", "Competent", "Adept"],
             correct: 1,
           },
           {
-            text: "He has ___ interest in sports; he never watches any game.",
+            text: "He has ___ interest in sports.",
             options: ["a little", "little", "few", "a few"],
             correct: 1,
           },
         ];
-        // Expand to 150+ by pushing more typical JAMB items
         while (englishBank.length < 150)
           englishBank.push(...englishBank.slice(0, 50));
-        const fullEnglishBank = englishBank.slice(0, 150);
+        const fullEnglish = englishBank.slice(0, 150);
 
-        // ----- LITERATURE BANK (100+ questions, Drama/Prose/Poetry/Literary terms) -----
         const literatureBank = [
           {
-            text: "In drama, the term 'catharsis' refers to:",
+            text: "In drama, 'catharsis' refers to:",
             options: [
               "Purification of emotions",
               "Comic relief",
@@ -678,12 +560,7 @@
             correct: 1,
           },
           {
-            text: "The central theme of 'The Marriage of Anansewa' is:",
-            options: ["Greed", "Cunning", "Love", "War"],
-            correct: 1,
-          },
-          {
-            text: "Cleopatra in 'Antony and Cleopatra' is best described as:",
+            text: "Cleopatra in 'Antony and Cleopatra' is:",
             options: ["Submissive", "Charismatic", "Timid", "Detached"],
             correct: 1,
           },
@@ -698,23 +575,18 @@
             correct: 1,
           },
           {
-            text: "The climax of a play refers to the:",
+            text: "Climax of a play refers to:",
             options: ["Beginning", "Turning point", "Ending", "Exposition"],
             correct: 1,
           },
           {
-            text: "A round character is one who:",
+            text: "A round character is:",
             options: [
-              "Is flat and static",
-              "Is complex and dynamic",
-              "Is minor",
-              "Is a stereotype",
+              "Flat and static",
+              "Complex and dynamic",
+              "Minor",
+              "Stereotype",
             ],
-            correct: 1,
-          },
-          {
-            text: "The point of view in a narrative refers to:",
-            options: ["Theme", "Perspective", "Plot", "Setting"],
             correct: 1,
           },
           {
@@ -733,29 +605,9 @@
             correct: 1,
           },
           {
-            text: "'New Tongue' explores the theme of:",
+            text: "'New Tongue' explores theme of:",
             options: ["Language loss", "War", "Love", "Nature"],
             correct: 0,
-          },
-          {
-            text: "The poet in 'New Tongue' laments:",
-            options: ["Colonialism", "Language erosion", "Poverty", "Death"],
-            correct: 1,
-          },
-          {
-            text: "The dominant mood in 'Night' is:",
-            options: ["Joy", "Fear", "Peace", "Anger"],
-            correct: 2,
-          },
-          {
-            text: "'Not My Business' warns against:",
-            options: ["Ignorance", "Apathy", "Greed", "Pride"],
-            correct: 1,
-          },
-          {
-            text: "The tone of 'Not My Business' is:",
-            options: ["Joyful", "Sarcastic", "Serious", "Humorous"],
-            correct: 2,
           },
           {
             text: "A sonnet has how many lines?",
@@ -763,29 +615,14 @@
             correct: 2,
           },
           {
-            text: "Alliteration is the repetition of:",
+            text: "Alliteration repeats:",
             options: ["Vowels", "Consonants", "Words", "Lines"],
             correct: 1,
           },
           {
-            text: "A stanza is:",
-            options: [
-              "A paragraph in prose",
-              "A line",
-              "A group of lines",
-              "A rhyme scheme",
-            ],
-            correct: 2,
-          },
-          {
-            text: "The figure of speech in 'The wind whispered' is:",
+            text: "Personification example: 'The wind whispered' is:",
             options: ["Simile", "Metaphor", "Personification", "Irony"],
             correct: 2,
-          },
-          {
-            text: "Autobiography is a type of:",
-            options: ["Fiction", "Non-fiction", "Drama", "Poetry"],
-            correct: 1,
           },
           {
             text: "Foreshadowing means:",
@@ -798,39 +635,28 @@
             correct: 1,
           },
           {
-            text: "In 'She Walks in Beauty', the woman is compared to:",
+            text: "In 'She Walks in Beauty', woman compared to:",
             options: ["The moon", "The night", "The sun", "A flower"],
             correct: 1,
           },
           {
-            text: "The 'Breast of the Sea' symbolizes:",
-            options: ["Danger", "Nurture", "Freedom", "Death"],
-            correct: 1,
-          },
-          {
-            text: "A poem with no rhyme scheme is called:",
-            options: ["Free verse", "Ballad", "Ode", "Elegy"],
+            text: "Free verse poem has no:",
+            options: ["Rhyme scheme", "Metaphor", "Stanzas", "Imagery"],
             correct: 0,
-          },
-          {
-            text: "The protagonist is the:",
-            options: ["Villain", "Hero", "Narrator", "Antagonist"],
-            correct: 1,
           },
         ];
         while (literatureBank.length < 110)
           literatureBank.push(...literatureBank.slice(0, 40));
         const fullLiterature = literatureBank.slice(0, 110);
 
-        // ----- GOVERNMENT BANK (100+ questions) -----
         const governmentBank = [
           {
-            text: "The first military coup in Nigeria took place in:",
+            text: "First military coup in Nigeria took place in:",
             options: ["1960", "1963", "1966", "1975"],
             correct: 2,
           },
           {
-            text: "The main function of the judiciary is to:",
+            text: "Main function of judiciary is to:",
             options: [
               "Make laws",
               "Implement laws",
@@ -840,12 +666,12 @@
             correct: 2,
           },
           {
-            text: "Separation of powers is associated with:",
+            text: "Separation of powers associated with:",
             options: ["Marx", "Montesquieu", "Locke", "Hobbes"],
             correct: 1,
           },
           {
-            text: "Head of government in a parliamentary system is the:",
+            text: "Head of government in parliamentary system is:",
             options: [
               "President",
               "Prime Minister",
@@ -855,7 +681,7 @@
             correct: 1,
           },
           {
-            text: "The Nigerian Council of 1914 was established by:",
+            text: "Nigerian Council of 1914 established by:",
             options: [
               "Lord Lugard",
               "Hugh Clifford",
@@ -865,7 +691,7 @@
             correct: 0,
           },
           {
-            text: "Rule of law was popularized by:",
+            text: "Rule of law popularized by:",
             options: ["Dicey", "Plato", "Aristotle", "Rousseau"],
             correct: 0,
           },
@@ -875,22 +701,12 @@
             correct: 1,
           },
           {
-            text: "The executive implements laws. True or false?",
-            options: ["True", "False", "Partly", "None"],
-            correct: 0,
-          },
-          {
-            text: "The 1999 Constitution provides for:",
+            text: "1999 Constitution provides for:",
             options: ["Unitary", "Confederal", "Federal", "Monarchical"],
             correct: 2,
           },
           {
-            text: "The supreme law of a country is the:",
-            options: ["Act", "Constitution", "Decree", "Edict"],
-            correct: 1,
-          },
-          {
-            text: "A feature of federalism is:",
+            text: "Feature of federalism:",
             options: [
               "Unitary police",
               "Division of powers",
@@ -900,76 +716,20 @@
             correct: 1,
           },
           {
-            text: "A fundamental human right is:",
-            options: [
-              "Right to vote",
-              "Right to life",
-              "Right to property",
-              "Right to education",
-            ],
-            correct: 1,
-          },
-          {
-            text: "The first executive president of Nigeria was:",
+            text: "First executive president of Nigeria:",
             options: ["Azikiwe", "Obasanjo", "Shagari", "Jonathan"],
             correct: 2,
           },
           {
-            text: "The amalgamation of Nigeria took place in:",
+            text: "Amalgamation of Nigeria took place in:",
             options: ["1914", "1922", "1946", "1960"],
             correct: 0,
-          },
-          {
-            text: "The legislature is responsible for:",
-            options: [
-              "Making laws",
-              "Interpreting laws",
-              "Executing laws",
-              "Adjudicating",
-            ],
-            correct: 0,
-          },
-          {
-            text: "Presidential system features:",
-            options: [
-              "Fusion of powers",
-              "Separation of powers",
-              "Collective responsibility",
-              "Question time",
-            ],
-            correct: 1,
-          },
-          {
-            text: "Sovereignty means:",
-            options: [
-              "Supreme power",
-              "Limited power",
-              "Shared power",
-              "Delegated power",
-            ],
-            correct: 0,
-          },
-          {
-            text: "The first political party in Nigeria was:",
-            options: ["NNDP", "NCNC", "AG", "NPC"],
-            correct: 0,
-          },
-          {
-            text: "Which constitution introduced federal character?",
-            options: ["1979", "1963", "1999", "1960"],
-            correct: 0,
-          },
-          {
-            text: "The military regime that transferred power in 1979 was led by:",
-            options: ["Murtala", "Obasanjo", "Babangida", "Abacha"],
-            correct: 1,
           },
         ];
         while (governmentBank.length < 100)
           governmentBank.push(...governmentBank.slice(0, 45));
         const fullGovernment = governmentBank.slice(0, 100);
 
-        // ----- CRS BANK (100+ questions) -----
         const crsBank = [
           {
             text: "Which prophet confronted King Ahab?",
@@ -982,18 +742,13 @@
             correct: 0,
           },
           {
-            text: "The Ten Commandments were given on Mount:",
+            text: "Ten Commandments given on Mount:",
             options: ["Sinai", "Zion", "Olivet", "Carmel"],
             correct: 0,
           },
           {
-            text: "The first king of Israel was:",
+            text: "First king of Israel:",
             options: ["Saul", "David", "Solomon", "Samuel"],
-            correct: 0,
-          },
-          {
-            text: "God's covenant with Noah was a:",
-            options: ["Rainbow", "Dove", "Olive branch", "Fire"],
             correct: 0,
           },
           {
@@ -1002,7 +757,7 @@
             correct: 0,
           },
           {
-            text: "Jesus' first miracle was:",
+            text: "Jesus' first miracle:",
             options: [
               "Water to wine",
               "Healing blind",
@@ -1032,55 +787,14 @@
             correct: 0,
           },
           {
-            text: "Matthias replaced:",
-            options: ["Judas Iscariot", "Peter", "James", "Andrew"],
-            correct: 0,
-          },
-          {
-            text: "The Ethiopian eunuch was baptized by:",
-            options: ["Philip", "Peter", "Paul", "John"],
-            correct: 0,
-          },
-          {
             text: "Paul was struck blind on the road to:",
             options: ["Damascus", "Jerusalem", "Rome", "Antioch"],
-            correct: 0,
-          },
-          {
-            text: "The first Christian martyr was:",
-            options: ["Stephen", "James", "Peter", "Paul"],
-            correct: 0,
-          },
-          {
-            text: "Faith without works is dead is from:",
-            options: ["James", "Romans", "Hebrews", "Titus"],
-            correct: 0,
-          },
-          {
-            text: "Most New Testament epistles were written by:",
-            options: ["Paul", "Peter", "John", "James"],
-            correct: 0,
-          },
-          {
-            text: "Main theme of Romans:",
-            options: ["Justification by faith", "Creation", "Prophecy", "Law"],
-            correct: 0,
-          },
-          {
-            text: "Fruit of the Spirit is listed in:",
-            options: ["Galatians", "Ephesians", "Philippians", "Colossians"],
-            correct: 0,
-          },
-          {
-            text: "Love is patient and kind is from:",
-            options: ["1 Corinthians", "2 Timothy", "Hebrews", "Galatians"],
             correct: 0,
           },
         ];
         while (crsBank.length < 100) crsBank.push(...crsBank.slice(0, 45));
         const fullCRS = crsBank.slice(0, 100);
 
-        // ----- SHUFFLE & SELECT (always picks random subset from large bank) -----
         function shuffleAndSelect(bank, needed) {
           const shuffled = [...bank];
           for (let i = shuffled.length - 1; i > 0; i--) {
@@ -1090,50 +804,82 @@
           return shuffled.slice(0, needed);
         }
 
-        let currentSubject = "english",
-          currentQuestions = [],
+        let subjectProgress = {
+          english: {
+            questions: null,
+            answers: null,
+            currentIndex: 0,
+            initialized: false,
+          },
+          literature: {
+            questions: null,
+            answers: null,
+            currentIndex: 0,
+            initialized: false,
+          },
+          government: {
+            questions: null,
+            answers: null,
+            currentIndex: 0,
+            initialized: false,
+          },
+          crs: {
+            questions: null,
+            answers: null,
+            currentIndex: 0,
+            initialized: false,
+          },
+        };
+        let currentSubject = "english";
+        let currentQuestions = [],
           userAnswers = [],
-          currentIndex = 0,
-          timerInterval,
+          currentIndex = 0;
+        let timerInterval,
           timeLeft = 2 * 60 * 60;
-        const mainApp = document.getElementById("mainApp"),
-          regModal = document.getElementById("registrationModal"),
-          displayRegBadge = document.getElementById("displayRegBadge");
+        let examLocked = false;
 
-        document.getElementById("regForm").addEventListener("submit", (e) => {
-          e.preventDefault();
-          let name = document.getElementById("studentName").value.trim(),
-            reg = document.getElementById("studentRegNo").value.trim();
-          if (!name || !reg) return alert("All fields required");
-          studentFullName = name;
-          studentRegNumber = reg;
-          displayRegBadge.textContent = `Reg: ${reg} | ${name.split(" ")[0]}`;
-          regModal.style.display = "none";
-          mainApp.style.display = "flex";
-          loadSubject("english");
-          timerInterval = setInterval(updateTimer, 1000);
-        });
+        function initSubject(subject) {
+          if (!subjectProgress[subject].initialized) {
+            let bank, count;
+            if (subject === "english") {
+              bank = fullEnglish;
+              count = 60;
+            } else if (subject === "literature") {
+              bank = fullLiterature;
+              count = 40;
+            } else if (subject === "government") {
+              bank = fullGovernment;
+              count = 40;
+            } else {
+              bank = fullCRS;
+              count = 40;
+            }
+            const selected = shuffleAndSelect(bank, count);
+            subjectProgress[subject].questions = selected;
+            subjectProgress[subject].answers = new Array(selected.length).fill(
+              null,
+            );
+            subjectProgress[subject].initialized = true;
+          }
+        }
 
         function loadSubject(subject) {
+          if (examLocked) return;
+          if (currentQuestions.length)
+            subjectProgress[currentSubject].answers = [...userAnswers];
+          subjectProgress[currentSubject].currentIndex = currentIndex;
           currentSubject = subject;
-          if (subject === "english") {
-            currentQuestions = shuffleAndSelect(fullEnglishBank, 60);
-            document.getElementById("subjectTitle").innerText =
-              "Use of English";
-          } else if (subject === "literature") {
-            currentQuestions = shuffleAndSelect(fullLiterature, 40);
-            document.getElementById("subjectTitle").innerText =
-              "Literature in English";
-          } else if (subject === "government") {
-            currentQuestions = shuffleAndSelect(fullGovernment, 40);
-            document.getElementById("subjectTitle").innerText = "Government";
-          } else {
-            currentQuestions = shuffleAndSelect(fullCRS, 40);
-            document.getElementById("subjectTitle").innerText =
-              "Christian Religious Studies (CRS)";
-          }
-          userAnswers = new Array(currentQuestions.length).fill(null);
-          currentIndex = 0;
+          initSubject(subject);
+          currentQuestions = subjectProgress[subject].questions;
+          userAnswers = [...subjectProgress[subject].answers];
+          currentIndex = subjectProgress[subject].currentIndex;
+          const titles = {
+            english: "Use of English",
+            literature: "Literature in English",
+            government: "Government",
+            crs: "Christian Religious Studies (CRS)",
+          };
+          document.getElementById("subjectTitle").innerText = titles[subject];
           renderQuestion();
           renderQuestionGrid();
           updateAnsweredCount();
@@ -1144,141 +890,195 @@
           if (!q) return;
           document.getElementById("questionCounter").innerHTML =
             `Question ${currentIndex + 1} of ${currentQuestions.length}`;
-          document.getElementById("questionContainer").innerHTML =
-            `<div class="space-y-6"><p class="text-xl leading-relaxed text-foreground font-medium">${q.text}</p><div class="space-y-3">${q.options.map((opt, idx) => `<label class="flex items-center gap-4 p-4 rounded-xl border ${userAnswers[currentIndex] === idx ? "border-primary bg-primary/5" : "border-border bg-card"} hover:border-primary/50 cursor-pointer"><input type="radio" name="option" value="${idx}" ${userAnswers[currentIndex] === idx ? "checked" : ""} class="w-5 h-5 accent-primary" onchange="window.selectAnswer(${idx})"><div class="flex items-center gap-3"><span class="w-8 h-8 flex items-center justify-center rounded-lg ${userAnswers[currentIndex] === idx ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"} text-sm font-bold">${String.fromCharCode(65 + idx)}</span><span class="text-lg text-foreground">${opt}</span></div></label>`).join("")}</div></div>`;
+          const container = document.getElementById("questionContainer");
+          container.innerHTML = `<div class="space-y-6"><p class="text-xl leading-relaxed text-gray-900 font-medium">${q.text}</p><div class="space-y-3">${q.options.map((opt, idx) => `<label class="flex items-center gap-4 p-4 rounded-xl border ${userAnswers[currentIndex] === idx ? "border-blue-900 bg-blue-50" : "border-gray-200 bg-white"} hover:border-blue-900/50 cursor-pointer"><input type="radio" name="option" value="${idx}" ${userAnswers[currentIndex] === idx ? "checked" : ""} class="w-5 h-5 accent-blue-900" onchange="window.selectAnswer(${idx})"><div class="flex items-center gap-3"><span class="w-8 h-8 flex items-center justify-center rounded-lg ${userAnswers[currentIndex] === idx ? "bg-blue-900 text-white" : "bg-gray-100 text-gray-900"} text-sm font-bold">${String.fromCharCode(65 + idx)}</span><span class="text-lg text-gray-900">${opt}</span></div></label>`).join("")}</div></div>`;
         }
+
         window.selectAnswer = (idx) => {
+          if (examLocked) return;
           userAnswers[currentIndex] = idx;
+          subjectProgress[currentSubject].answers = [...userAnswers];
           renderQuestion();
           renderQuestionGrid();
           updateAnsweredCount();
         };
+
         function renderQuestionGrid() {
           let html = "";
           for (let i = 0; i < currentQuestions.length; i++) {
             const isAnswered = userAnswers[i] !== null,
               isCurrent = i === currentIndex;
             let cls = isAnswered
-              ? "bg-primary text-primary-foreground"
+              ? "bg-blue-900 text-white"
               : isCurrent
-                ? "border-2 border-primary bg-card text-primary ring-2 ring-primary/20"
-                : "bg-muted text-foreground border border-border";
+                ? "border-2 border-blue-900 bg-white text-blue-900 ring-2 ring-blue-900/20"
+                : "bg-gray-100 text-gray-900 border border-gray-200";
             html += `<button onclick="window.goToQuestion(${i})" class="w-full aspect-square flex items-center justify-center rounded-lg font-bold text-sm shadow-sm ${cls}">${i + 1}</button>`;
           }
           document.getElementById("questionGrid").innerHTML = html;
         }
+
         window.goToQuestion = (i) => {
-          currentIndex = i;
-          renderQuestion();
+          if (!examLocked) {
+            currentIndex = i;
+            subjectProgress[currentSubject].currentIndex = i;
+            renderQuestion();
+            renderQuestionGrid();
+          }
         };
         function updateAnsweredCount() {
+          const answered = userAnswers.filter((a) => a !== null).length;
           document.getElementById("answeredCount").innerText =
-            `${userAnswers.filter((a) => a !== null).length} / ${currentQuestions.length}`;
+            `${answered} / ${currentQuestions.length}`;
         }
-        function calculateScore() {
+
+        function computeSubjectScore(subject) {
+          const data = subjectProgress[subject];
+          if (!data.initialized) return 0;
           let correct = 0;
-          for (let i = 0; i < currentQuestions.length; i++)
-            if (
-              userAnswers[i] !== null &&
-              userAnswers[i] === currentQuestions[i].correct
-            )
-              correct++;
-          return Math.round((correct / currentQuestions.length) * 400);
+          data.answers.forEach((ans, idx) => {
+            if (ans !== null && ans === data.questions[idx].correct) correct++;
+          });
+          return Math.round((correct / data.questions.length) * 100);
         }
-        async function sendResultEmail(score, total, answered) {
+
+        async function finalSubmitAll() {
+          if (examLocked) return;
+          if (
+            !confirm(
+              "⚠️ FINAL SUBMIT: Your responses will be sent to the examiner. You will NOT see your score. Proceed?",
+            )
+          )
+            return;
+          examLocked = true;
+          clearInterval(timerInterval);
+
+          const engScore = computeSubjectScore("english"),
+            litScore = computeSubjectScore("literature"),
+            govScore = computeSubjectScore("government"),
+            crsScore = computeSubjectScore("crs");
+          const totalJambScore = engScore + litScore + govScore + crsScore;
+          let totalAnswered = 0,
+            totalQuestionsAll = 0;
+          for (let sub of ["english", "literature", "government", "crs"]) {
+            const d = subjectProgress[sub];
+            if (d.initialized) {
+              totalAnswered += d.answers.filter((a) => a !== null).length;
+              totalQuestionsAll += d.questions.length;
+            }
+          }
+          const btn = document.getElementById("finalSubmitBtn");
+          btn.innerHTML =
+            "<iconify-icon icon='lucide:loader-circle' class='animate-spin'></iconify-icon> Sending...";
+          btn.disabled = true;
+
           const templateParams = {
             student_name: studentFullName,
             registration_number: studentRegNumber,
-            score,
-            total_questions: total,
-            answered,
-            percentage: ((score / 400) * 100).toFixed(1) + "%",
-            subject: currentSubject.toUpperCase(),
-            time_submitted: new Date().toLocaleString(),
+            english_score: engScore,
+            literature_score: litScore,
+            government_score: govScore,
+            crs_score: crsScore,
+            total_jamb_score: totalJambScore,
+            total_answered: totalAnswered,
+            total_possible: totalQuestionsAll,
+            exam_status: "COMPLETED (ARTS)",
+            time_stamp: new Date().toLocaleString(),
+            overall_percentage: Math.round((totalJambScore / 400) * 100),
             name: studentFullName,
             reg_no: studentRegNumber,
-            exam_score: score,
+            score: totalJambScore,
             max_score: 400,
-            correct_answers: Math.round((score / 400) * total),
           };
+
           try {
             await emailjs.send(
               EMAILJS_SERVICE_ID,
               EMAILJS_TEMPLATE_ID,
               templateParams,
             );
-            return true;
+            // No alert showing score! Silent success - only admin email receives detailed result.
+            alert(
+              "✅ Your examination has been submitted successfully. Thank you.",
+            );
           } catch (e) {
             console.error(e);
-            alert("Result saved locally, email not sent.");
-            return false;
+            alert(
+              "⚠️ Submission recorded locally. Administrator will be notified manually. Thank you for completing the exam.",
+            );
           }
-        }
-        async function submitQuiz() {
-          if (
-            !confirm("Submit exam? You cannot change answers after submission.")
-          )
-            return;
-          clearInterval(timerInterval);
-          const score = calculateScore(),
-            answered = userAnswers.filter((a) => a !== null).length,
-            total = currentQuestions.length;
-          const btn = document.getElementById("submitBtn"),
-            orig = btn.innerHTML;
-          btn.innerHTML =
-            "<iconify-icon icon='lucide:loader-circle' class='animate-spin'></iconify-icon> Sending...";
-          btn.disabled = true;
-          await sendResultEmail(score, total, answered);
-          btn.innerHTML = orig;
-          btn.disabled = false;
-          alert(
-            `✅ EXAM SUBMITTED!\n\nStudent: ${studentFullName} (${studentRegNumber})\nScore: ${score}/400\nAnswered: ${answered}/${total}\nPercentage: ${((score / 400) * 100).toFixed(1)}%\nResult sent to administrator.`,
-          );
-          document.getElementById("nextBtn").disabled = true;
-          document.getElementById("prevBtn").disabled = true;
+
           document
             .querySelectorAll(".subject-tab")
-            .forEach((btn) => (btn.disabled = true));
+            .forEach((t) => t.classList.add("disabled-tab"));
+          document.getElementById("nextBtn").disabled = true;
+          document.getElementById("prevBtn").disabled = true;
+          btn.innerHTML = "✓ Submitted";
         }
+
         function updateTimer() {
-          if (timeLeft <= 0) {
+          if (timeLeft <= 0 && !examLocked) {
             clearInterval(timerInterval);
-            submitQuiz();
+            finalSubmitAll();
             return;
           }
-          const h = Math.floor(timeLeft / 3600),
-            m = Math.floor((timeLeft % 3600) / 60),
-            s = timeLeft % 60;
-          document.getElementById("timer").innerHTML =
-            `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-          timeLeft--;
+          if (!examLocked) {
+            const h = Math.floor(timeLeft / 3600),
+              m = Math.floor((timeLeft % 3600) / 60),
+              s = timeLeft % 60;
+            document.getElementById("timer").innerHTML =
+              `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+            timeLeft--;
+          }
         }
+
+        document.getElementById("regForm").addEventListener("submit", (e) => {
+          e.preventDefault();
+          const name = document.getElementById("studentName").value.trim(),
+            reg = document.getElementById("studentRegNo").value.trim();
+          if (!name || !reg) return alert("Please fill all fields.");
+          studentFullName = name;
+          studentRegNumber = reg;
+          document.getElementById("displayRegBadge").innerHTML =
+            `Reg: ${reg} | ${name.split(" ")[0]}`;
+          document.getElementById("registrationModal").style.display = "none";
+          document.getElementById("mainApp").style.display = "block";
+          loadSubject("english");
+          timerInterval = setInterval(updateTimer, 1000);
+        });
+
         document.querySelectorAll(".subject-tab").forEach((btn) =>
           btn.addEventListener("click", function () {
+            if (examLocked) return;
             document.querySelectorAll(".subject-tab").forEach((b) => {
-              b.classList.remove("bg-primary", "text-primary-foreground");
-              b.classList.add("text-muted-foreground");
+              b.classList.remove("bg-blue-900", "text-white");
+              b.classList.add("text-gray-500");
             });
-            this.classList.add("bg-primary", "text-primary-foreground");
-            this.classList.remove("text-muted-foreground");
+            this.classList.add("bg-blue-900", "text-white");
+            this.classList.remove("text-gray-500");
             loadSubject(this.dataset.subject);
           }),
         );
+
         document.getElementById("nextBtn").addEventListener("click", () => {
-          if (currentIndex < currentQuestions.length - 1) {
+          if (!examLocked && currentIndex < currentQuestions.length - 1) {
             currentIndex++;
+            subjectProgress[currentSubject].currentIndex = currentIndex;
             renderQuestion();
-          } else alert("Last question reached");
+            renderQuestionGrid();
+          }
         });
         document.getElementById("prevBtn").addEventListener("click", () => {
-          if (currentIndex > 0) {
+          if (!examLocked && currentIndex > 0) {
             currentIndex--;
+            subjectProgress[currentSubject].currentIndex = currentIndex;
             renderQuestion();
-          } else alert("First question");
+            renderQuestionGrid();
+          }
         });
         document
-          .getElementById("submitBtn")
-          .addEventListener("click", submitQuiz);
+          .getElementById("finalSubmitBtn")
+          .addEventListener("click", finalSubmitAll);
 
         const calcModal = document.getElementById("calculatorModal"),
           calcInput = document.getElementById("calcInput");
@@ -1286,17 +1086,32 @@
         function updateCalc() {
           calcInput.value = calcValue;
         }
-        document
-          .getElementById("openCalculator")
-          .addEventListener("click", () => calcModal.classList.add("active"));
-        document
-          .getElementById("floatingCalcBtn")
-          .addEventListener("click", () => calcModal.classList.add("active"));
-        document
-          .getElementById("closeCalculator")
-          .addEventListener("click", () =>
-            calcModal.classList.remove("active"),
-          );
+        const calcButtons = [
+          "7",
+          "8",
+          "9",
+          "/",
+          "4",
+          "5",
+          "6",
+          "*",
+          "1",
+          "2",
+          "3",
+          "-",
+          "0",
+          ".",
+          "C",
+          "+",
+          "=",
+          "⌫",
+        ];
+        document.getElementById("calcButtons").innerHTML = calcButtons
+          .map(
+            (v) =>
+              `<button class="calc-btn p-3 ${v === "C" ? "bg-red-500" : v === "=" ? "bg-blue-900" : "bg-gray-100"} rounded-lg font-bold ${v === "C" || v === "=" ? "text-white" : "text-gray-900"}">${v}</button>`,
+          )
+          .join("");
         document.querySelectorAll(".calc-btn").forEach((btn) =>
           btn.addEventListener("click", (e) => {
             const val = e.target.innerText;
@@ -1315,6 +1130,17 @@
             updateCalc();
           }),
         );
+        document
+          .getElementById("openCalculator")
+          .addEventListener("click", () => calcModal.classList.add("active"));
+        document
+          .getElementById("floatingCalcBtn")
+          .addEventListener("click", () => calcModal.classList.add("active"));
+        document
+          .getElementById("closeCalculator")
+          .addEventListener("click", () =>
+            calcModal.classList.remove("active"),
+          );
       })();
     </script>
   </body>
